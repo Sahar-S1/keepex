@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeepEx</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>KeepEx</h1>
+
+        <hr>
+
+        <form action="/">
+            <div class="form-group">
+                <label for="input">Input</label>
+                <textarea class="form-control" id="input" rows="10"></textarea>
+            </div>
+
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary" id="paste">Paste</button>
+                <button type="button" class="btn btn-secondary" id="process">Process</button>
+                <button type="button" class="btn btn-secondary" id="copy">Copy</button>
+            </div>
+
+            <div class="form-group">
+                <label for="output">Output</label>
+                <textarea class="form-control" id="output" rows="10"></textarea>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        var input = document.getElementById("input");
+        var output = document.getElementById("output");
+
+        document.getElementById("process").onclick = () => {
+            output.value = input.value
+                .split('\n')
+                .filter(l => l.startsWith('[x]'))
+                .map((l, i, a) => String(i + 1).padStart(String(a.length).length, '0') + ') ' + l.substring(4))
+                .join('\n');
+        }
+
+        document.getElementById("paste").onclick = async () => {
+            input.value = await navigator.clipboard.readText();
+        }
+
+        document.getElementById("copy").onclick = async () => {
+            await navigator.clipboard.writeText(output.value);
+        }
+    </script>
+
+</body>
+
+</html>
