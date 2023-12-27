@@ -44,7 +44,7 @@
         document.getElementById("process").onclick = () => {
             output.value = input.value
                 .split('\n')
-                .filter(l => l.startsWith('[x]'))
+                .filter(l => l.startsWith('[X]'))
                 .map((l, i, a) => String(i + 1).padStart(String(a.length).length, '0') + ') ' + l.substring(4))
                 .join('\n');
         }
